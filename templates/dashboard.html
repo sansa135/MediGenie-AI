@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Health Analytics Dashboard</h1>
+
+    <canvas id="myChart"></canvas>
+
+</div>
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Flu', 'Covid', 'Cold'],
+            datasets: [{
+                label: 'Disease Cases',
+                data: [12, 19, 8],
+                borderWidth: 1
+            }]
+        }
+    });
+</script>
+
+</body>
+</html>

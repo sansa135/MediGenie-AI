@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Medical Report Analyzer</title>
+
+  <link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>Medical Report Analyzer</h1>
+
+  <textarea id="report" placeholder="Paste medical report here"></textarea>
+
+  <br><br>
+
+  <button onclick="analyzeReport()">Analyze</button>
+
+  <div id="loading"></div>
+
+  <div id="result"></div>
+
+</div>
+
+<script>
+
+  async function analyzeReport() {
+
+      const report = document.getElementById('report').value;
+
+      if(report.trim() === "") {
+          alert("Please enter medical report");
+          return;
+      }
+
+      document.getElementById('loading').innerHTML = "Analyzing Report...";
+
+      const formData = new FormData();
+
+      formData.append('report', report);
+
+      try {
+
+          const response = await fetch('/analyze', {
+              method: 'POST',
+              body: formData
+          });
+
+          const data = await response.json();
+
+          document.getElementById('loading').innerHTML = "";
+
+          document.getElementById('result').innerHTML = `
+              <h2>AI Analysis</h2>
+              <p>${data.analysis}</p>
+          `;
+
+      } catch(error) {
+
+          document.getElementById('loading').innerHTML = "";
+
+          document.getElementById('result').innerHTML =
+              "<p>Something went wrong!</p>";
+
+          console.log(error);
+      }
+  }
+
+</script>
+
+</body>
+</html>
